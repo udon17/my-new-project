@@ -1,0 +1,26 @@
+<div *ngFor="let question of getCurrentPageQuestions(); let i = index">
+    <h3>{{ question.question }}</h3>
+    <div *ngFor="let option of question.options; let j = index">
+      <label>
+        <input
+          type="radio"
+          name="question-{{ currentPage * questionsPerPage + i }}"
+          [value]="j"
+          [(ngModel)]="answers[currentPage * questionsPerPage + i]"
+          (change)="answers[currentPage * questionsPerPage + i] = j"
+        />
+        {{ option }}
+      </label>
+    </div>
+  </div>
+  
+  <div>
+    <button (click)="prevPage()" [disabled]="currentPage === 0">前へ</button>
+    <button (click)="nextPage()" [disabled]="currentPage === getTotalPages() - 1">
+      次へ
+    </button>
+  </div>
+  
+  <div *ngIf="currentPage === getTotalPages() - 1">
+    <button (click)="submit()">診断を送信</button>
+  </div>
